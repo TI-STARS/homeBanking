@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" href="img/icon.png">
+    <title>Tela de Login</title>
+</head>
+
+<body>
+    <!-- Vídeo de fundo -->
+    <video autoplay muted loop id="video-background" class="video-background">
+        <source src="video/background.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
+    <div class="overlay"></div>
+
+    <div class="login-container">
+        <div>
+            <img src="img/logo.png" style="width: 250px; height: 50px;" alt="Logo">
+        </div>
+        <br>    
+        <div style="margin-top: 5%;" class="login-header">
+            <h1>Bem-vindo de volta</h1>
+            <p>Por favor, faça login para continuar</p>
+        </div>
+        
+        <form name="formLogin" id="formLogin" method="post" action="php/login.php">
+            <div class="input-group">
+                <input type="text" id="username" name="username" required>
+                <label for="username">Usuário</label>
+                <center><small style="color: #C2A150;" id='msg_user'></small></center>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="password" name="password" required>
+                <label for="password">Senha</label>
+                <center><small style="color: #C2A150;" id='msg_pass'></small></center>
+            </div>
+            
+            <button type="submit" class="login-button">Entrar</button>
+            
+            <div class="forgot-password">
+                <a href="#">Esqueceu sua senha?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        document.querySelectorAll('.input-group input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.querySelector('label').style.color = '#6e8efb';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentNode.querySelector('label').style.color = '#999';
+                }
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.login-container').style.opacity = '1';
+        });
+
+        function getUrlParam() {
+            const queryString = window.location.search;
+            if (!queryString) return null;
+            return queryString.substring(1);
+        }
+
+        const valorParametro = getUrlParam();
+        console.log(valorParametro); 
+
+        if (valorParametro === '1') {
+            document.getElementById('msg_pass').innerHTML = 'Senha incorreta';
+            
+            setTimeout(() => {
+                document.getElementById('msg_pass').textContent = '';
+            }, 10000);
+        }
+        if (valorParametro === '2') {
+            document.getElementById('msg_user').innerHTML = 'Usuario não encontrado';
+            
+            setTimeout(() => {
+                document.getElementById('msg_user').textContent = '';
+            }, 10000);
+        }        
+    </script>
+</body>
+</html>
